@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="18dp"
+    tools:context=".ui.signup.SyaratActivity">
+
+    <ImageView
+        android:id="@+id/suara_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/suara_kita"
+        android:layout_margin="12dp"
+        android:layout_centerHorizontal="true"
+        android:transitionName="icon"/>
+
+    <TextView
+        android:id="@+id/terms_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/terms"
+        android:textSize="24sp"
+        android:fontFamily="@font/sf_bold"
+        android:textColor="@color/black"
+        android:layout_below="@id/suara_logo"
+        android:layout_marginTop="12dp"/>
+
+    <ScrollView
+        android:id="@+id/terms_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/terms_text">
+
+        <TextView
+            android:id="@+id/terms_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/terms_content"
+            android:textSize="14sp"
+            android:fontFamily="@font/sf_regular"
+            android:textColor="@color/black"
+            android:layout_below="@id/terms_text"
+            android:layout_marginTop="12dp"/>
+    </ScrollView>
+
+
+    <TextView
+        android:id="@+id/terms_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/terms_scroll"
+        android:layout_marginTop="21dp"
+        android:fontFamily="@font/sf_bold"
+        android:text="@string/terms_confirm"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/next_button"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="@string/agree"
+        android:fontFamily="@font/sf_bold"
+        android:textSize="18sp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/button"/>
+
+
+</RelativeLayout>

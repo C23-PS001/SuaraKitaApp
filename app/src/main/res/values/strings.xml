@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Suara Kita</string>
+    <string name="welcome">Halo Calon Pemilih!</string>
+    <string name="welcome_desc">Selamat datang di aplikasi Suara Kita. Suara Kita merupakan aplikasi karya anak bangsa yang bertujuan untuk modernisasi pemilu di Indonesia. Aplikasi ini dibuat untuk memenuhi Capstone Project Bangkit Academy 2023.</string>
+    <string name="login">Login</string>
+    <string name="register">Daftar</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="input_email">Masukan Email dan Password</string>
+    <string name="terms">Syarat dan Ketentuan</string>
+    <string name="terms_content">1. Data pribadi dan informasi yang pengguna berikan pada aplikasi ini adalah data yang benar.\n\n2. Pengguna harus sudah terdaftar sebagai calon pemilih di KPU daerah setempat dengan data-data yang lengkap.\n\n3. Pengguna dipersilakan mendaftar terlebih dahulu di laman awal menggunakan KTP yang sesuai.\n\n4. Setelah mendaftar, pengguna bisa meninggalkan aplikasi dan dapat kembali saat waktu pemilihan berlangsung\n\n5. Setiap data dan hasil pemilihan di aplikasi ini bersifat rahasia dan tidak dapat disebarluaskan baik dari pengguna maupun “Suara Kita”.\n\n6. Silahkan gunakan aplikasi ini secara bijak sesuai dengan etika dan norma yang berlaku di masyarakat umum. </string>
+    <string name="terms_confirm">Dengan menekan lanjut, anda setuju dengan syarat dan ketentuan diatas.</string>
+    <string name="agree">Setuju</string>
+    <string name="verifikasi_data">Silahkan Cek Data Anda</string>
+    <string name="next">Lanjut</string>
+    <string name="buat_akun">Mohon Buat Email dan Password</string>
+    <string name="home">Home</string>
+    <string name="account">Profile</string>
+    <string name="halo">Halo,</string>
+    <string name="halo_nama">John Doe</string>
+    <string name="data_pemilih">Data Pemilih</string>
+    <string name="logout">logout</string>
+    <string name="sample">Sample</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="tanggal_lahir">Tanggal Lahir</string>
+    <string name="jenis_kelamin">Jenis Kelamin</string>
+    <string name="nik">NIK</string>
+    <string name="verify_data">Silahkan Verifikasi Data Anda</string>
+    <string name="live_count">Perhitungan Sementara</string>
+
+</resources>
