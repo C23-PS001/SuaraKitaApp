@@ -86,5 +86,5 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:indeterminate="true"
-        android:indeterminateTint="@color/red" />
+        android:indeterminateTint="@color/softred" />
 </RelativeLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:scatter="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/background"
     tools:context=".ui.home.HomeActivity">
@@ -48,16 +49,26 @@
             android:src="@drawable/baseline_notifications_24" />
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/banner"
-        android:layout_width="350dp"
+<!--    <ImageButton-->
+<!--        android:id="@+id/banner"-->
+<!--        android:layout_width="350dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:layout_marginStart="18dp"-->
+<!--        android:layout_marginEnd="18dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:background="@drawable/tesbanner"-->
+<!--        android:text = "Banner"/>-->
+
+    <com.denzcoskun.imageslider.ImageSlider
+        android:id="@+id/image_slider"
+        android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp"
-        android:layout_gravity="center"
-        android:background="@drawable/tesbanner"
-        android:text = "Banner"/>
+        app:iss_auto_cycle="true"
+        app:iss_delay="0"
+        app:iss_period="3000"
+        app:iss_corner_radius="10"
+        android:layout_margin="18dp"/>
 
     <TextView
         android:id="@+id/vote_count"
@@ -69,7 +80,17 @@
         android:textSize="20sp"
         android:fontFamily="@font/sf_bold"
         android:textColor="@color/black"
-        android:layout_below="@id/banner" />
+        android:layout_below="@id/image_slider" />
+
+    <com.intrusoft.scatter.PieChart
+        android:id="@+id/pie_chart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="18dp"
+        scatter:equalPartition="false"
+        scatter:textColor="@color/black"
+        scatter:textSize="40"
+        android:layout_below="@id/vote_count"/>
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
