@@ -30,5 +30,8 @@
     <string name="upload">Unggah</string>
     <string name="take_photo">Ambil Gambar</string>
     <string name="mohon_unggah_ktp">Mohon Ambil Foto KTP</string>
+    <string name="mohon_verifikasi">Mohon Lakukan Verifikasi Wajah Terlebih Dahulu</string>
+    <string name="vote">Pilih</string>
+    <string name="back">Kembali</string>
 
 </resources>

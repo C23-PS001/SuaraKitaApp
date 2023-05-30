@@ -18,6 +18,12 @@
         android:theme="@style/Theme.SuaraKita"
         tools:targetApi="31">
         <activity
+            android:name=".ui.vote.VoteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.vote.GuideActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.vote.VerivoteActivity"
             android:exported="false" />
         <activity

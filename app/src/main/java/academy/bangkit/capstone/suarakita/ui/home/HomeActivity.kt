@@ -5,6 +5,8 @@ import academy.bangkit.capstone.suarakita.databinding.ActivityHomeBinding
 import academy.bangkit.capstone.suarakita.model.UserPreference
 import academy.bangkit.capstone.suarakita.ui.ViewModelFactory
 import academy.bangkit.capstone.suarakita.ui.profile.ProfileActivity
+import academy.bangkit.capstone.suarakita.ui.vote.VerivoteActivity
+import academy.bangkit.capstone.suarakita.ui.vote.VoteActivity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -57,7 +59,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
         binding.fab.setOnClickListener{
-            Toast.makeText(this, "Fab", Toast.LENGTH_SHORT).show()
+            val intentVote = Intent(this, VerivoteActivity::class.java)
+            startActivity(intentVote)
         }
     }
 
@@ -70,9 +73,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupName() {
-        homeViewModel.getUser().observe(this, {
-                binding.haloName.text =it.name
-        })
+        homeViewModel.getUser().observe(this) {
+            binding.haloName.text = it.name
+        }
     }
 
     private fun setupCarousel(){
