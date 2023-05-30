@@ -35,7 +35,7 @@ class SyaratActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.nextButton.setOnClickListener {
-            val loginIntent = Intent(this, VerifyActivity::class.java)
+            val loginIntent = Intent(this, KtpActivity::class.java)
 //            startActivity(loginIntent, ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle())
             startActivity(loginIntent)
         }

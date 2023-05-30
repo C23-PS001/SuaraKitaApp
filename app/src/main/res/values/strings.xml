@@ -27,5 +27,8 @@
     <string name="nik">NIK</string>
     <string name="verify_data">Silahkan Verifikasi Data Anda</string>
     <string name="live_count">Perhitungan Sementara</string>
+    <string name="upload">Unggah</string>
+    <string name="take_photo">Ambil Gambar</string>
+    <string name="mohon_unggah_ktp">Mohon Ambil Foto KTP</string>
 
 </resources>
