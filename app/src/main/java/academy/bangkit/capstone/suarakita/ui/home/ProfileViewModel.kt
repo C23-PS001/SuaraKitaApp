@@ -1,4 +1,4 @@
-package academy.bangkit.capstone.suarakita.ui.profile
+package academy.bangkit.capstone.suarakita.ui.home
 
 import academy.bangkit.capstone.suarakita.model.UserModel
 import academy.bangkit.capstone.suarakita.model.UserPreference
@@ -16,17 +16,22 @@ class ProfileViewModel (private val pref: UserPreference) : ViewModel(){
     private val _response = MutableLiveData<List<UserItem>>()
     val response: MutableLiveData<List<UserItem>> = _response
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: MutableLiveData<Boolean> = _isLoading
+
     fun getUser(): LiveData<UserModel> {
         return pref.getUser().asLiveData()
     }
 
     fun getProfile(token:String){
+        _isLoading.value = true
         val service = ApiConfig.getApiService().getData(token)
         service.enqueue(object : Callback<UserResponse> {
             override fun onResponse(
                 call: Call<UserResponse>,
                 response: Response<UserResponse>
             ) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     _response.value = response.body()?.data
                     Log.d("Profile", "onResponse: ${response.body()}")
@@ -35,6 +40,7 @@ class ProfileViewModel (private val pref: UserPreference) : ViewModel(){
                 }
             }
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                _isLoading.value = false
                 Log.d("Profile", "Gagal Login: ${t.message.toString()}")
             }
         })

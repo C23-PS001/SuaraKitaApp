@@ -2,9 +2,9 @@ package academy.bangkit.capstone.suarakita.ui
 
 import academy.bangkit.capstone.suarakita.model.UserPreference
 import academy.bangkit.capstone.suarakita.ui.home.HomeViewModel
+import academy.bangkit.capstone.suarakita.ui.home.ProfileViewModel
 import academy.bangkit.capstone.suarakita.ui.login.LoginViewModel
 import academy.bangkit.capstone.suarakita.ui.main.MainViewModel
-import academy.bangkit.capstone.suarakita.ui.profile.ProfileViewModel
 import academy.bangkit.capstone.suarakita.ui.signup.SignupViewModel
 import academy.bangkit.capstone.suarakita.ui.vote.VoteViewModel
 import androidx.lifecycle.ViewModel

@@ -19,7 +19,7 @@
         android:id="@+id/terms_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/mohon_unggah_ktp"
+        android:text="@string/mohon_selfie"
         android:textSize="24sp"
         android:fontFamily="@font/sf_bold"
         android:textColor="@color/black"

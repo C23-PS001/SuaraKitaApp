@@ -18,6 +18,12 @@
         android:theme="@style/Theme.SuaraKita"
         tools:targetApi="31">
         <activity
+            android:name=".ui.signup.FaceCompareActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.camera.SelfieActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.vote.VoteActivity"
             android:exported="false" />
         <activity
@@ -31,9 +37,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.camera.CameraActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.profile.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".ui.signup.VerifyActivity"

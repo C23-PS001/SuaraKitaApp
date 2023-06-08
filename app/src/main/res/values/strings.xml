@@ -33,5 +33,9 @@
     <string name="mohon_verifikasi">Mohon Lakukan Verifikasi Wajah Terlebih Dahulu</string>
     <string name="vote">Pilih</string>
     <string name="back">Kembali</string>
+    <string name="vote_confirm">Anda akan memilih pasangan nomor urut %s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mohon_selfie">Mohon Lakukan Selfie Untuk Dilakukan Verifikasi</string>
 
 </resources>

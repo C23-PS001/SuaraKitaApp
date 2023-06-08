@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:scatter="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/background"
+        tools:context=".ui.home.HomeActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="18dp">
+
+            <TextView
+                android:id="@+id/halo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/halo"
+                android:textSize="20sp"
+                android:fontFamily="@font/sf_regular"
+                android:textColor="@color/black"
+                android:layout_below="@id/vote_icon" />
+
+            <TextView
+                android:id="@+id/halo_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/halo_nama"
+                android:layout_marginStart="5dp"
+                android:textSize="20sp"
+                android:fontFamily="@font/sf_bold"
+                android:textColor="@color/black"
+                android:layout_below="@id/vote_icon" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/notification_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:src="@drawable/baseline_notifications_24" />
+        </LinearLayout>
+
+        <com.denzcoskun.imageslider.ImageSlider
+            android:id="@+id/image_slider"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:iss_auto_cycle="true"
+            app:iss_delay="0"
+            app:iss_period="3000"
+            app:iss_corner_radius="10"
+            android:layout_margin="18dp"/>
+
+        <TextView
+            android:id="@+id/vote_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/live_count"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="18dp"
+            android:textSize="20sp"
+            android:fontFamily="@font/sf_bold"
+            android:textColor="@color/black"
+            android:layout_below="@id/image_slider" />
+
+        <com.intrusoft.scatter.PieChart
+            android:id="@+id/pie_chart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="18dp"
+            scatter:equalPartition="false"
+            scatter:textColor="@color/black"
+            scatter:textSize="40"
+            android:layout_below="@id/vote_count"/>
+
+
+    </LinearLayout>
+
+</FrameLayout>

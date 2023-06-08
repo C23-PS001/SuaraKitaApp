@@ -17,6 +17,9 @@ class LoginViewModel(private val pref: UserPreference) : ViewModel(){
     private val _response = MutableLiveData<LoginResponse?>()
     val response: MutableLiveData<LoginResponse?> = _response
 
+    private val _error = MutableLiveData<String>()
+    val error: MutableLiveData<String> = _error
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: MutableLiveData<Boolean> = _isLoading
 
@@ -35,20 +38,16 @@ class LoginViewModel(private val pref: UserPreference) : ViewModel(){
                 response: Response<LoginResponse>
             ) {
                 _isLoading.value = false
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null && !responseBody.error) {
-                        Log.d("Login", "onResponse: ${responseBody.message}")
-                        _response.value = responseBody
-                    }
-
-                } else {
-                    Log.d("Login", "onResponse: ${response.message()}")
+                if(response.isSuccessful){
+                    _response.value = response.body()
+                    Log.d("Login", "onResponse: ${response.body()?.message}")
                 }
             }
+
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 _isLoading.value = false
-                Log.d("Login", "Gagal Login: ${t.message.toString()}")
+                _error.value = t.message.toString()
+                Log.d("Login Gagal", "Gagal Login: ${t.message.toString()}")
             }
         })
     }

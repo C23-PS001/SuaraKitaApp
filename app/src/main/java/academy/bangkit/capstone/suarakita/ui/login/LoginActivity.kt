@@ -8,12 +8,12 @@ import academy.bangkit.capstone.suarakita.ui.home.HomeActivity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -32,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
 
         setupView()
         setupAction()
+
         showLoading(false)
 
         loginViewModel = ViewModelProvider(
@@ -39,22 +40,24 @@ class LoginActivity : AppCompatActivity() {
             ViewModelFactory(UserPreference.getInstance(dataStore))
         )[LoginViewModel::class.java]
 
+        loginViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+
         loginViewModel.response.observe(this) {
             if (it != null) {
                 if (!it.error) {
                     loginViewModel.saveUser(UserModel(it.nama, it.id, true))
+                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                     finish()
-                } else {
+                }else{
                     Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
-        loginViewModel.isLoading.observe(this, {
-            showLoading(it)
-        })
     }
 
     private fun setupView() {
@@ -81,7 +84,5 @@ class LoginActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-
-
 
 }

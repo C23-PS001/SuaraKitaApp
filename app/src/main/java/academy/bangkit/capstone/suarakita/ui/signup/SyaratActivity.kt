@@ -3,10 +3,10 @@ package academy.bangkit.capstone.suarakita.ui.signup
 import academy.bangkit.capstone.suarakita.databinding.ActivitySyaratBinding
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 
 class SyaratActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySyaratBinding
@@ -35,7 +35,7 @@ class SyaratActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.nextButton.setOnClickListener {
-            val loginIntent = Intent(this, KtpActivity::class.java)
+            val loginIntent = Intent(this, FaceCompareActivity::class.java)
 //            startActivity(loginIntent, ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle())
             startActivity(loginIntent)
         }

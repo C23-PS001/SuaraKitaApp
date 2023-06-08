@@ -1,9 +1,9 @@
 package academy.bangkit.capstone.suarakita.ui.signup
 
-import academy.bangkit.capstone.suarakita.databinding.ActivityKtpBinding
+import academy.bangkit.capstone.suarakita.databinding.ActivityFaceCompareBinding
 import academy.bangkit.capstone.suarakita.model.UserPreference
 import academy.bangkit.capstone.suarakita.ui.ViewModelFactory
-import academy.bangkit.capstone.suarakita.ui.camera.CameraActivity
+import academy.bangkit.capstone.suarakita.ui.camera.SelfieActivity
 import academy.bangkit.capstone.suarakita.ui.camera.rotateFile
 import android.Manifest
 import android.content.Context
@@ -24,15 +24,18 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-class KtpActivity : AppCompatActivity() {
+class FaceCompareActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityKtpBinding
+    private lateinit var binding: ActivityFaceCompareBinding
     private lateinit var signupViewModel: SignupViewModel
 
     override fun onRequestPermissionsResult(
@@ -59,7 +62,7 @@ class KtpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityKtpBinding.inflate(layoutInflater)
+        binding = ActivityFaceCompareBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupViewModel()
@@ -98,7 +101,7 @@ class KtpActivity : AppCompatActivity() {
     }
 
     private fun startTakePhoto() {
-        val intent = Intent(this, CameraActivity::class.java)
+        val intent = Intent(this, SelfieActivity::class.java)
         launcherIntentCameraX.launch(intent)
     }
 
@@ -126,33 +129,36 @@ class KtpActivity : AppCompatActivity() {
     }
 
     private fun startUploadPhoto() {
-//        if (getFile != null) {
-//            val file = reduceFileImage(getFile as File)
-//
-//            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-//            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-//                "photo",
-//                file.name,
-//                requestImageFile
-//            )
-//
-//            signupViewModel.uploadId(imageMultipart)
-//
-//            signupViewModel.response.observe(this) {
-//                if (it == "Story created successfully") {
-//                    Toast.makeText(this, "Upload Berhasil", Toast.LENGTH_SHORT).show()
-//                    val intent = Intent(this, KtpActivity::class.java)
-//                    startActivity(intent)
-//                    finish()
-//                } else {
-//                    Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//
-//        } else {
-//            Toast.makeText(this, "Silakan masukkan berkas gambar terlebih dahulu.", Toast.LENGTH_SHORT).show()
-//        }
-        startActivity(Intent(this, VerifyActivity::class.java))
+        if (getFile != null) {
+            val file = reduceFileImage(getFile as File)
+
+            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "photo",
+                file.name,
+                requestImageFile
+            )
+
+            signupViewModel.uploadId(imageMultipart)
+
+            signupViewModel.faceResponse.observe(this) {
+                if (it == "Story created successfully") {
+                    Toast.makeText(this, "Upload Berhasil", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, KtpActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        } else {
+            Toast.makeText(
+                this,
+                "Silakan masukkan berkas gambar terlebih dahulu.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun reduceFileImage(file: File): File {

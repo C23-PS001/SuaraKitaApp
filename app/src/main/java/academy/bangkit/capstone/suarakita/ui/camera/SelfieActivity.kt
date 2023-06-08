@@ -1,7 +1,7 @@
 package academy.bangkit.capstone.suarakita.ui.camera
 
 import academy.bangkit.capstone.suarakita.R
-import academy.bangkit.capstone.suarakita.databinding.ActivityCameraBinding
+import academy.bangkit.capstone.suarakita.databinding.ActivitySelfieBinding
 import academy.bangkit.capstone.suarakita.ui.signup.KtpActivity
 import android.content.Intent
 import android.os.Build
@@ -17,8 +17,8 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 
-class CameraActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityCameraBinding
+class SelfieActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySelfieBinding
     private var imageCapture: ImageCapture? = null
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
@@ -26,21 +26,17 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
 
-        binding = ActivityCameraBinding.inflate(layoutInflater)
+        binding = ActivitySelfieBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.captureImage.setOnClickListener { takePhoto() }
-
-        binding.switchCamera.setOnClickListener {
-            cameraSelector = if (cameraSelector.equals(CameraSelector.DEFAULT_BACK_CAMERA)) CameraSelector.DEFAULT_FRONT_CAMERA
-            else CameraSelector.DEFAULT_BACK_CAMERA
-            startCamera()
-        }
     }
 
     public override fun onResume() {
         super.onResume()
         hideSystemUI()
+        cameraSelector = if (cameraSelector.equals(CameraSelector.DEFAULT_BACK_CAMERA)) CameraSelector.DEFAULT_FRONT_CAMERA
+        else CameraSelector.DEFAULT_BACK_CAMERA
         startCamera()
     }
 
@@ -55,7 +51,7 @@ class CameraActivity : AppCompatActivity() {
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
                     Toast.makeText(
-                        this@CameraActivity,
+                        this@SelfieActivity,
                         "Gagal mengambil gambar.",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -97,7 +93,7 @@ class CameraActivity : AppCompatActivity() {
                 )
             } catch (exc: Exception) {
                 Toast.makeText(
-                    this@CameraActivity,
+                    this@SelfieActivity,
                     "Gagal memunculkan kamera.",
                     Toast.LENGTH_SHORT
                 ).show()
