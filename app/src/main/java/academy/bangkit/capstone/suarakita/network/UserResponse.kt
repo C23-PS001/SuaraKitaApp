@@ -16,9 +16,6 @@ data class UserResponse(
 
 data class UserItem(
 
-	@field:SerializedName("nik")
-	val nik: Long,
-
 	@field:SerializedName("nama")
 	val nama: String,
 
@@ -27,6 +24,9 @@ data class UserItem(
 
 	@field:SerializedName("tanggalLahir")
 	val tanggalLahir: String,
+
+	@field:SerializedName("isVoted")
+	val isVoted: Int,
 
 	@field:SerializedName("email")
 	val email: String

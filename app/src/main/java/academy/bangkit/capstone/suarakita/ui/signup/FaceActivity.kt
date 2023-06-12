@@ -1,5 +1,6 @@
 package academy.bangkit.capstone.suarakita.ui.signup
 
+import academy.bangkit.capstone.suarakita.R
 import academy.bangkit.capstone.suarakita.databinding.ActivityFaceCompareBinding
 import academy.bangkit.capstone.suarakita.model.UserPreference
 import academy.bangkit.capstone.suarakita.ui.ViewModelFactory
@@ -11,6 +12,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
@@ -24,16 +26,14 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
+import com.bumptech.glide.Glide
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-class FaceCompareActivity : AppCompatActivity() {
+class FaceActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFaceCompareBinding
     private lateinit var signupViewModel: SignupViewModel
@@ -91,6 +91,11 @@ class FaceCompareActivity : AppCompatActivity() {
             )
         }
         supportActionBar?.hide()
+
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.selfie_guide1)
+            .into(binding.previewImageView)
     }
 
     private fun setupViewModel() {
@@ -132,25 +137,15 @@ class FaceCompareActivity : AppCompatActivity() {
         if (getFile != null) {
             val file = reduceFileImage(getFile as File)
 
-            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "photo",
-                file.name,
-                requestImageFile
-            )
+//            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+//            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+//                "photo",
+//                file.name,
+//                requestImageFile
+//            )
 
-            signupViewModel.uploadId(imageMultipart)
-
-            signupViewModel.faceResponse.observe(this) {
-                if (it == "Story created successfully") {
-                    Toast.makeText(this, "Upload Berhasil", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, KtpActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-                }
-            }
+            val intent = Intent(this, FaceActivity2::class.java)
+            intent.putExtra("image1", Uri.fromFile(file))
 
         } else {
             Toast.makeText(

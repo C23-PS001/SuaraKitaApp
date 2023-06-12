@@ -18,6 +18,9 @@ class HomeViewModel(private val pref: UserPreference) : ViewModel() {
     private val _response = MutableLiveData<CountResponse>()
     val response: MutableLiveData<CountResponse> = _response
 
+    private val _voteStatus = MutableLiveData<Int>()
+    val voteStatus: LiveData<Int> = _voteStatus
+
     fun getUser(): LiveData<UserModel> {
         return pref.getUser().asLiveData()
     }
@@ -41,4 +44,6 @@ class HomeViewModel(private val pref: UserPreference) : ViewModel() {
             }
         })
     }
+
+
 }

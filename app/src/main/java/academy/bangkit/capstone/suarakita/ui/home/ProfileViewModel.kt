@@ -41,7 +41,7 @@ class ProfileViewModel (private val pref: UserPreference) : ViewModel(){
             }
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 _isLoading.value = false
-                Log.d("Profile", "Gagal Login: ${t.message.toString()}")
+                Log.d("Profile", "Gagalkah: ${t.message.toString()}")
             }
         })
     }

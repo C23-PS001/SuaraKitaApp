@@ -2,7 +2,7 @@ package academy.bangkit.capstone.suarakita.ui.home
 
 import academy.bangkit.capstone.suarakita.R
 import academy.bangkit.capstone.suarakita.databinding.ActivityHomeBinding
-import academy.bangkit.capstone.suarakita.ui.vote.VerivoteActivity
+import academy.bangkit.capstone.suarakita.ui.vote.VerifyIdActivity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +30,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         binding.fab.setOnClickListener{
-            val intentVote = Intent(this, VerivoteActivity::class.java)
+            val intentVote = Intent(this, VerifyIdActivity::class.java)
             startActivity(intentVote)
         }
     }
@@ -43,6 +43,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupView() {
         binding.bottomNavigationView.background = null
+
         supportActionBar?.hide()
 
         setFragment(HomeFragment())

@@ -168,16 +168,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="18dp"
-                        android:text="@string/nik"
+                        android:text="@string/status"
                         android:textSize="18sp"
                         android:fontFamily="@font/sf_bold"
                         android:textColor="@color/black" />
                     <TextView
-                        android:id="@+id/nik"
+                        android:id="@+id/status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="18dp"
                         android:text=""
+                        android:textStyle="bold"
                         android:textSize="18sp"
                         android:fontFamily="@font/sf_regular"
                         android:textColor="@color/black" />

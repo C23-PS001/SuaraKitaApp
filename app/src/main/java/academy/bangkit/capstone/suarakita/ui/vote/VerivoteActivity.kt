@@ -3,22 +3,20 @@ package academy.bangkit.capstone.suarakita.ui.vote
 import academy.bangkit.capstone.suarakita.databinding.ActivityVerivoteBinding
 import academy.bangkit.capstone.suarakita.model.UserPreference
 import academy.bangkit.capstone.suarakita.ui.ViewModelFactory
-import academy.bangkit.capstone.suarakita.ui.camera.CameraActivity
+import academy.bangkit.capstone.suarakita.ui.camera.SelfieActivity
 import academy.bangkit.capstone.suarakita.ui.camera.rotateFile
-import academy.bangkit.capstone.suarakita.ui.signup.SignupViewModel
-import academy.bangkit.capstone.suarakita.ui.signup.VerifyActivity
 import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
@@ -96,7 +94,7 @@ class VerivoteActivity : AppCompatActivity() {
     }
 
     private fun startTakePhoto() {
-        val intent = Intent(this, CameraActivity::class.java)
+        val intent = Intent(this, SelfieActivity::class.java)
         launcherIntentCameraX.launch(intent)
     }
 

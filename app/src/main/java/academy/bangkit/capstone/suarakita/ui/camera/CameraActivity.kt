@@ -10,10 +10,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 
@@ -30,12 +27,6 @@ class CameraActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.captureImage.setOnClickListener { takePhoto() }
-
-        binding.switchCamera.setOnClickListener {
-            cameraSelector = if (cameraSelector.equals(CameraSelector.DEFAULT_BACK_CAMERA)) CameraSelector.DEFAULT_FRONT_CAMERA
-            else CameraSelector.DEFAULT_BACK_CAMERA
-            startCamera()
-        }
     }
 
     public override fun onResume() {
@@ -61,6 +52,7 @@ class CameraActivity : AppCompatActivity() {
                     ).show()
                 }
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+
                     val intent = Intent()
                     intent.putExtra("picture", photoFile)
                     intent.putExtra(
@@ -85,7 +77,8 @@ class CameraActivity : AppCompatActivity() {
                     it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
                 }
 
-            imageCapture = ImageCapture.Builder().build()
+            imageCapture = ImageCapture.Builder()
+                .build()
 
             try {
                 cameraProvider.unbindAll()

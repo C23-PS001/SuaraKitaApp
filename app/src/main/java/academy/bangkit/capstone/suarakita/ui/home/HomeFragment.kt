@@ -41,8 +41,6 @@ class HomeFragment : Fragment() {
             binding.haloName.text = it.name
         }
 
-//        homeViewModel.getVoteCount()
-
         setupCarousel()
         setupPieChart()
 

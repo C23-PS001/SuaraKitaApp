@@ -1,9 +1,10 @@
 package academy.bangkit.capstone.suarakita.ui.signup
 
-import academy.bangkit.capstone.suarakita.databinding.ActivityKtpBinding
+import academy.bangkit.capstone.suarakita.R
+import academy.bangkit.capstone.suarakita.databinding.ActivityFace2Binding
 import academy.bangkit.capstone.suarakita.model.UserPreference
 import academy.bangkit.capstone.suarakita.ui.ViewModelFactory
-import academy.bangkit.capstone.suarakita.ui.camera.CameraActivity
+import academy.bangkit.capstone.suarakita.ui.camera.SelfieActivity
 import academy.bangkit.capstone.suarakita.ui.camera.rotateFile
 import android.Manifest
 import android.content.Context
@@ -11,11 +12,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Matrix
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +27,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -34,9 +37,8 @@ import java.io.FileOutputStream
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-class KtpActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityKtpBinding
+class FaceActivity2 : AppCompatActivity() {
+    private lateinit var binding: ActivityFace2Binding
     private lateinit var signupViewModel: SignupViewModel
 
     override fun onRequestPermissionsResult(
@@ -63,13 +65,11 @@ class KtpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityKtpBinding.inflate(layoutInflater)
+        binding = ActivityFace2Binding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.hide()
 
         setupViewModel()
-
-        showLoading(false)
+        setupView()
 
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
@@ -79,12 +79,26 @@ class KtpActivity : AppCompatActivity() {
             )
         }
 
-        signupViewModel.isLoading.observe(this) {
-            showLoading(it)
-        }
-
         binding.cameraButton.setOnClickListener { startTakePhoto() }
         binding.uploadButton.setOnClickListener { startUploadPhoto() }
+    }
+
+    private fun setupView() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+        supportActionBar?.hide()
+
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.selfie_guide2)
+            .into(binding.previewImageView)
     }
 
     private fun setupViewModel() {
@@ -95,7 +109,7 @@ class KtpActivity : AppCompatActivity() {
     }
 
     private fun startTakePhoto() {
-        val intent = Intent(this, CameraActivity::class.java)
+        val intent = Intent(this, SelfieActivity::class.java)
         launcherIntentCameraX.launch(intent)
     }
 
@@ -112,74 +126,50 @@ class KtpActivity : AppCompatActivity() {
                 it.data?.getSerializableExtra("picture")
             } as? File
 
-
             val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
 
             myFile?.let { file ->
                 rotateFile(file, isBackCamera)
-                val capturedImageBitmap = BitmapFactory.decodeFile(file.path)
-                var croppedImageBitmap = cropImageBitmap(capturedImageBitmap)
-                croppedImageBitmap = rotateImage(croppedImageBitmap)
-
-                val croppedImageOutputStream = FileOutputStream(file)
-                croppedImageBitmap.compress(Bitmap.CompressFormat.PNG, 100, croppedImageOutputStream)
-                croppedImageOutputStream.close()
-
                 getFile = file
                 binding.previewImageView.setImageBitmap(BitmapFactory.decodeFile(file.path))
             }
         }
     }
 
-    private fun cropImageBitmap(bitmap: Bitmap): Bitmap {
-        val cardWidth = 1200
-        val cardHeight = 1800
-
-        Log.d("KtpActivity", "bitmap width: ${bitmap.width}")
-        Log.d("KtpActivity", "bitmap height: ${bitmap.height}")
-        val startX = (bitmap.width - cardWidth) / 2
-        val startY = (bitmap.height - cardHeight) / 2
-
-        return Bitmap.createBitmap(bitmap, startX, startY, cardWidth, cardHeight)
-    }
-
-    private fun rotateImage(bitmap: Bitmap): Bitmap {
-        val matrix = Matrix()
-        matrix.postRotate(270f)
-
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-    }
-
     private fun startUploadPhoto() {
         if (getFile != null) {
             val file = reduceFileImage(getFile as File)
 
-            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "images",
+            val requestImageFile2 = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imageMultipart2: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "image2",
                 file.name,
-                requestImageFile
+                requestImageFile2
             )
 
-            signupViewModel.uploadKtp(imageMultipart)
+            val fileUri = intent.getParcelableExtra<Uri>("image1")
+            val file1 = File(fileUri?.path)
+            val requestImageFile1 = file1.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imageMultipart1: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "image1",
+                file.name,
+                requestImageFile1
+            )
 
-            Toast.makeText(this, "Mohon menunggu pengecekan KTP 1-2 menit", Toast.LENGTH_SHORT).show()
+            val userId = intent.getStringExtra("userId")
 
-            signupViewModel.responseKtp.observe(this) {
-                val intent = Intent(this, VerifyActivity::class.java)
-                if (it != null){
-                    intent.putExtra("nik", it.nik)
-                    intent.putExtra("name", it.nama)
-                    Log.d("KTP", it.nama )
-                    intent.putExtra("dob", it.tglLahir)
-                }
-                Log.d("KTP", "startUploadPhoto: $it")
-                startActivity(intent)
-                finish()
+            if (userId != null) {
+                signupViewModel.uploadPhoto(imageMultipart1, imageMultipart2, userId)
+            }else{
+                Log.d("FaceActivity2", "startUploadPhoto: userId is null")
             }
 
         } else {
-            Toast.makeText(this, "Silakan masukkan berkas gambar terlebih dahulu.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "Silakan masukkan berkas gambar terlebih dahulu.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -198,10 +188,6 @@ class KtpActivity : AppCompatActivity() {
 
         bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
         return file
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {

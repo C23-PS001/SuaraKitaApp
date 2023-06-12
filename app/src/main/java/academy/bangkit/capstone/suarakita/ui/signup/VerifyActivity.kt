@@ -5,12 +5,9 @@ import academy.bangkit.capstone.suarakita.model.UserPreference
 import academy.bangkit.capstone.suarakita.ui.ViewModelFactory
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
@@ -31,13 +28,13 @@ class VerifyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityVerifyBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
         signupViewModel = ViewModelProvider(
             this,
             ViewModelFactory(UserPreference.getInstance(dataStore))
         )[SignupViewModel::class.java]
 
-        setupView()
         setupAction()
         showLoading(false)
 
@@ -47,23 +44,10 @@ class VerifyActivity : AppCompatActivity() {
 
     }
 
-    private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
-        supportActionBar?.hide()
-    }
-
     private fun setupAction() {
-        binding.namaEditText.setText("Menyiram Bunga")
-        binding.nikEditText.setText("1234567890123456")
-        binding.tanggalEditText.setText("2000/01/01")
+        binding.namaEditText.setText(intent.getStringExtra("name"))
+        binding.nikEditText.setText(intent.getStringExtra("nik"))
+        binding.tanggalEditText.setText(intent.getStringExtra("dob"))
 
         binding.tanggalEditText.isFocusable = false
         binding.tanggalEditText.isClickable = true
@@ -75,22 +59,22 @@ class VerifyActivity : AppCompatActivity() {
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                     .build()
 
-            datePicker.show(supportFragmentManager, "date_picker_tag")
+            datePicker.show(supportFragmentManager, "date_picker")
 
             datePicker.addOnPositiveButtonClickListener {
                 val selectedDate = Date(it)
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 val formattedDate = dateFormat.format(selectedDate)
-                binding.tanggalEditText.setText(formattedDate)
+                binding.tanggalEditText.setText(formattedDate.toString())
             }
         }
 
         binding.verifyButton.setOnClickListener {
-            val nik = binding.nikEditText.text.toString()
-            val nama = binding.namaEditText.text.toString()
-            val tanggal = binding.tanggalEditText.text.toString()
-            val email = binding.emailEditText.text.toString()
-            val password = binding.passEditText.text.toString()
+            var nik = binding.nikEditText.text.toString()
+            var nama = binding.namaEditText.text.toString()
+            var tanggal = binding.tanggalEditText.text.toString()
+            var email = binding.emailEditText.text.toString()
+            var password = binding.passEditText.text.toString()
             when {
                 nik.isEmpty() -> {
                     binding.nikField.error = "Masukkan NIK"
@@ -113,7 +97,8 @@ class VerifyActivity : AppCompatActivity() {
                     signupViewModel.response.observe(this) {
                         if (it != null) {
                             if(!it.error) {
-                                val intent = Intent(this, FaceCompareActivity::class.java)
+                                val intent = Intent(this, FaceActivity::class.java)
+                                intent.putExtra("userId", it.idUser)
                                 startActivity(intent)
                                 finish()
                             }else{

@@ -15,10 +15,16 @@
         android:icon="@drawable/suara_kita"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SuaraKita"
+        android:theme="@style/Theme.SuaraKita.Light"
         tools:targetApi="31">
         <activity
-            android:name=".ui.signup.FaceCompareActivity"
+            android:name=".ui.vote.VerifyIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.signup.FaceActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".ui.signup.FaceActivity"
             android:exported="false" />
         <activity
             android:name=".ui.camera.SelfieActivity"

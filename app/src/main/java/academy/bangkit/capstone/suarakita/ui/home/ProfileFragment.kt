@@ -40,6 +40,8 @@ class ProfileFragment : Fragment() {
             ViewModelFactory(UserPreference.getInstance(requireContext().dataStore))
         )[ProfileViewModel::class.java]
 
+        setupAction()
+
         profileViewModel.getUser().observe(viewLifecycleOwner) { user ->
             profileViewModel.getProfile(user.token)
         }
@@ -48,8 +50,6 @@ class ProfileFragment : Fragment() {
             setUserData(user)
         }
 
-        setupAction()
-
         profileViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
@@ -57,16 +57,37 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+
     private fun setUserData(user: List<UserItem>?) {
         if (user != null) {
             binding.namaLengkap.text = user[0].nama
             binding.tanggalLahir.text = user[0].tanggalLahir
             binding.email.text = user[0].email
-            binding.nik.text = user[0].nik.toString()
+            if(user[0].isVoted == 1) {
+                binding.status.text = "Sudah Memilih"
+                binding.status.setTextColor(resources.getColor(android.R.color.holo_green_dark))
+            } else {
+                binding.status.text = "Belum Memilih"
+                binding.status.setTextColor(resources.getColor(android.R.color.holo_red_dark))
+            }
         }
     }
 
     private fun setupAction() {
+//        if(userData.isNotEmpty()){
+//            setUserData(userData)
+//        }else{
+//            profileViewModel.getUser().observe(viewLifecycleOwner) { user ->
+//                profileViewModel.getProfile(user.token)
+//            }
+//
+//            profileViewModel.response.observe(viewLifecycleOwner) { user ->
+//                setUserData(user)
+//                userData = user
+//                Log.d("ProfileFragment", "setupAction: $userData")
+//            }
+//        }
+
         binding.logoutButton.setOnClickListener {
             profileViewModel.logout()
             val intent = Intent(activity, MainActivity::class.java)

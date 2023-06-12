@@ -36,7 +36,7 @@ class VoteActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        countDownTimer = object : CountDownTimer(900000, 1000) {
+        countDownTimer = object : CountDownTimer(90000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 binding.timer.text = (millisUntilFinished / 1000).toString() + " detik"
             }

@@ -37,193 +37,127 @@
 
     </LinearLayout>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card1"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:strokeWidth="2dp"
-        app:strokeColor="@color/black">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="01"
-                android:textSize="30dp"
-                android:fontFamily="@font/sf_bold"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                />
-
-            <!-- Media -->
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="175dp"
-                app:srcCompat="@drawable/paslon"
-                android:scaleType="fitXY"
-                android:contentDescription=""
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:padding="4dp">
-
-                <!-- Title, secondary and supporting text -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:text="Hendra Januar\nOpan Simbolon"
-                    android:textSize="24dp"
-                    android:fontFamily="@font/sf_bold"
-                    android:gravity="center_horizontal"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    />
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:text="@string/secondary_text"-->
-<!--                    android:textAppearance="?attr/textAppearanceBodyMedium"-->
-<!--                    android:textColor="?android:attr/textColorSecondary"-->
-<!--                    />-->
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="16dp"-->
-<!--                    android:text="@string/supporting_text"-->
-<!--                    android:textAppearance="?attr/textAppearanceBodyMedium"-->
-<!--                    android:textColor="?android:attr/textColorSecondary"-->
-<!--                    />-->
-
-            </LinearLayout>
-
-            <!-- Buttons -->
-<!--            <LinearLayout-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_margin="8dp"-->
-<!--                android:orientation="horizontal">-->
-<!--                <com.google.android.material.button.MaterialButton-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginEnd="8dp"-->
-<!--                    android:text="@string/action_1"-->
-<!--                    style="?attr/borderlessButtonStyle"-->
-<!--                    />-->
-<!--                <com.google.android.material.button.MaterialButton-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/action_2"-->
-<!--                    style="?attr/borderlessButtonStyle"-->
-<!--                    />-->
-<!--            </LinearLayout>-->
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:strokeWidth="2dp"
-        app:strokeColor="@color/black">
-
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="02"
-                android:textSize="30dp"
-                android:fontFamily="@font/sf_bold"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                />
-
-            <!-- Media -->
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="175dp"
-                app:srcCompat="@drawable/paslon"
-                android:scaleType="fitXY"
-                android:contentDescription=""
-                />
+            android:layout_marginTop="16dp"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/black">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:gravity="center_horizontal"
-                android:padding="4dp">
+                android:orientation="vertical">
 
-                <!-- Title, secondary and supporting text -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:text="Hendra Januar\nOpan Simbolon"
-                    android:textSize="24dp"
+                    android:text="01"
+                    android:textSize="30dp"
                     android:fontFamily="@font/sf_bold"
-                    android:gravity="center_horizontal"
                     android:textAppearance="?attr/textAppearanceTitleMedium"
                     />
-                <!--                <TextView-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="8dp"-->
-                <!--                    android:text="@string/secondary_text"-->
-                <!--                    android:textAppearance="?attr/textAppearanceBodyMedium"-->
-                <!--                    android:textColor="?android:attr/textColorSecondary"-->
-                <!--                    />-->
-                <!--                <TextView-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="16dp"-->
-                <!--                    android:text="@string/supporting_text"-->
-                <!--                    android:textAppearance="?attr/textAppearanceBodyMedium"-->
-                <!--                    android:textColor="?android:attr/textColorSecondary"-->
-                <!--                    />-->
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="175dp"
+                    app:srcCompat="@drawable/paslon"
+                    android:scaleType="fitXY"
+                    android:contentDescription=""
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:text="Hendra Januar\nOpan Simbolon"
+                        android:textSize="24dp"
+                        android:fontFamily="@font/sf_bold"
+                        android:gravity="center_horizontal"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <!-- Buttons -->
-            <!--            <LinearLayout-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_margin="8dp"-->
-            <!--                android:orientation="horizontal">-->
-            <!--                <com.google.android.material.button.MaterialButton-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_marginEnd="8dp"-->
-            <!--                    android:text="@string/action_1"-->
-            <!--                    style="?attr/borderlessButtonStyle"-->
-            <!--                    />-->
-            <!--                <com.google.android.material.button.MaterialButton-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:text="@string/action_2"-->
-            <!--                    style="?attr/borderlessButtonStyle"-->
-            <!--                    />-->
-            <!--            </LinearLayout>-->
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/black">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="02"
+                    android:textSize="30dp"
+                    android:fontFamily="@font/sf_bold"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="175dp"
+                    app:srcCompat="@drawable/paslon"
+                    android:scaleType="fitXY"
+                    android:contentDescription=""
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:padding="4dp">
+
+                    <!-- Title, secondary and supporting text -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:text="Hendra Januar\nOpan Simbolon"
+                        android:textSize="24dp"
+                        android:fontFamily="@font/sf_bold"
+                        android:gravity="center_horizontal"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
+    </ScrollView>
 
 </LinearLayout>

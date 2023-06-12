@@ -3,16 +3,26 @@ package academy.bangkit.capstone.suarakita.ui.vote
 import academy.bangkit.capstone.suarakita.model.UserModel
 import academy.bangkit.capstone.suarakita.model.UserPreference
 import academy.bangkit.capstone.suarakita.network.ApiConfig
+import academy.bangkit.capstone.suarakita.network.VerifyResponse
 import academy.bangkit.capstone.suarakita.network.VoteResponse
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.security.MessageDigest
 
 class VoteViewModel(private val pref: UserPreference) : ViewModel() {
+
+    private val _voteStatus = MutableLiveData<VerifyResponse>()
+    val voteStatus: LiveData<VerifyResponse> = _voteStatus
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     fun getUser(): LiveData<UserModel> {
         return pref.getUser().asLiveData()
     }
@@ -38,5 +48,33 @@ class VoteViewModel(private val pref: UserPreference) : ViewModel() {
                 Log.d("Vote", "Gagal Login: ${t.message.toString()}")
             }
         })
+    }
+
+    fun getVoteStatus(NIK: String){
+        _isLoading.value = true
+        val service = ApiConfig.getApiService().getVoteStatus(NIK)
+        service.enqueue(object : Callback<VerifyResponse> {
+            override fun onResponse(
+                call: Call<VerifyResponse>,
+                response: Response<VerifyResponse>
+            ) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    _voteStatus.value = response.body()
+                    Log.d("Vote Status", "onResponse: ${response.body()}")
+                } else {
+                    Log.d("Vote Status", "onResponse: ${response.message()}")
+                }
+            }
+            override fun onFailure(call: Call<VerifyResponse>, t: Throwable) {
+                _isLoading.value = false
+                Log.d("Vote Status", "Gagal dapat vote: ${t.message.toString()}")
+            }
+        })
+    }
+
+    fun hashNik(nik: String): String {
+        val hashNik = MessageDigest.getInstance("SHA-256").digest(nik.toByteArray())
+        return hashNik.fold("") { str, it -> str + "%02x".format(it) }
     }
 }

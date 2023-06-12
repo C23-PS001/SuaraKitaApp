@@ -7,9 +7,8 @@ import academy.bangkit.capstone.suarakita.ui.home.HomeActivity
 import academy.bangkit.capstone.suarakita.ui.welcome.WelcomeActivity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -27,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         supportActionBar?.hide()
     }
 
@@ -42,13 +40,13 @@ class MainActivity : AppCompatActivity() {
             ViewModelFactory(UserPreference.getInstance(dataStore))
         )[MainViewModel::class.java]
 
-        mainViewModel.getUser().observe(this, { user ->
-            if (user.isLogin){
+        mainViewModel.getUser().observe(this) { user ->
+            if (user.isLogin) {
                 startActivity(Intent(this, HomeActivity::class.java))
-            }else{
+            } else {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
             }
-        })
+        }
     }
 }

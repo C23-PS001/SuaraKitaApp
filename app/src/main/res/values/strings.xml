@@ -6,7 +6,7 @@
     <string name="register">Daftar</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="input_email">Masukan Email dan Password</string>
+    <string name="input_email">Login - Masukan Email dan Password</string>
     <string name="terms">Syarat dan Ketentuan</string>
     <string name="terms_content">1. Data pribadi dan informasi yang pengguna berikan pada aplikasi ini adalah data yang benar.\n\n2. Pengguna harus sudah terdaftar sebagai calon pemilih di KPU daerah setempat dengan data-data yang lengkap.\n\n3. Pengguna dipersilakan mendaftar terlebih dahulu di laman awal menggunakan KTP yang sesuai.\n\n4. Setelah mendaftar, pengguna bisa meninggalkan aplikasi dan dapat kembali saat waktu pemilihan berlangsung\n\n5. Setiap data dan hasil pemilihan di aplikasi ini bersifat rahasia dan tidak dapat disebarluaskan baik dari pengguna maupun “Suara Kita”.\n\n6. Silahkan gunakan aplikasi ini secara bijak sesuai dengan etika dan norma yang berlaku di masyarakat umum. </string>
     <string name="terms_confirm">Dengan menekan lanjut, anda setuju dengan syarat dan ketentuan diatas.</string>
@@ -34,8 +34,12 @@
     <string name="vote">Pilih</string>
     <string name="back">Kembali</string>
     <string name="vote_confirm">Anda akan memilih pasangan nomor urut %s</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="vote_guide">1. Anda hanya memiliki waktu 90 detik untuk memilih. Melebihi batas waktu proses pemilihan harus diulang dari tahap awal.\n\n2. Silahkan pilih calon dengan menekan gambar calon yang diinginkan.\n\n3. Pastikan anda memilih nomor dengan benar.\n\n4. Konfirmasi pasangan calon pilihan anda dengan mengekan tombol pilih.\n\n5. Suara anda telah tercatat.</string>
     <string name="mohon_selfie">Mohon Lakukan Selfie Untuk Dilakukan Verifikasi</string>
+    <string name="mohon_selfie1">Mohon Lakukan Selfie Menghadap Kamera</string>
+    <string name="mohon_selfie2">Mohon Lakukan Selfie Melihat Sisi Kiri</string>
+    <string name="verifikasi_nik">Mohon Masukan NIK Anda</string>
+    <string name="status">Status Pemilih</string>
+    <string name="panduan">Tata Cara Memilih</string>
 
 </resources>

@@ -2,7 +2,8 @@ package academy.bangkit.capstone.suarakita.ui.signup
 
 import academy.bangkit.capstone.suarakita.model.UserPreference
 import academy.bangkit.capstone.suarakita.network.ApiConfig
-import academy.bangkit.capstone.suarakita.network.FileUploadResponse
+import academy.bangkit.capstone.suarakita.network.FaceResponse
+import academy.bangkit.capstone.suarakita.network.KtpResponse
 import academy.bangkit.capstone.suarakita.network.RegisterResponse
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -17,11 +18,11 @@ class SignupViewModel(private val pref: UserPreference) : ViewModel(){
     private val _response = MutableLiveData<RegisterResponse?>()
     val response: MutableLiveData<RegisterResponse?> = _response
 
-    private val _faceResponse = MutableLiveData<Boolean>()
-    val faceResponse: MutableLiveData<Boolean> = _faceResponse
+    private val _faceResponse = MutableLiveData<Boolean?>()
+    val faceResponse: MutableLiveData<Boolean?> = _faceResponse
 
-    private val _responseKtp = MutableLiveData<String?>()
-    val responseKtp: MutableLiveData<String?> = _responseKtp
+    private val _responseKtp = MutableLiveData<KtpResponse?>()
+    val responseKtp: MutableLiveData<KtpResponse?> = _responseKtp
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: MutableLiveData<Boolean> = _isLoading
@@ -45,34 +46,59 @@ class SignupViewModel(private val pref: UserPreference) : ViewModel(){
                 Log.d("Register", "Gagal Buat Akun: ${t.message.toString()}")}
         })
     }
-    fun uploadId(imageMultipart: MultipartBody.Part){
+    fun uploadKtp(imageMultipart: MultipartBody.Part){
         _isLoading.value = true
-        val service = ApiConfig.getApiService().uploadId(imageMultipart)
-        service.enqueue(object : Callback<FileUploadResponse> {
+        val service = ApiConfig.getOcrService().uploadId(imageMultipart)
+        service.enqueue(object : Callback<KtpResponse> {
             override fun onResponse(
-                call: Call<FileUploadResponse>,
-                response: Response<FileUploadResponse>
+                call: Call<KtpResponse>,
+                response: Response<KtpResponse>
             ) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-                    if (responseBody != null && !responseBody.error) {
-                        Log.d("KTP Upload", "onResponse: ${responseBody.message}")
-                        _responseKtp.value = responseBody.message
+                    if (responseBody != null) {
+                        Log.d("KTP Upload Berhasil", "onResponse: $responseBody")
+                        _responseKtp.value = responseBody
                     }
                 } else {
-                    Log.d("KTP Upload", "onResponse: ${response.message()}")
-                    _responseKtp.value = response.message()
+                    Log.d("KTP Upload Gagal1", "onResponse: ${response.message()}")
+//                    _responseKtp.value = response.message()
                 }
             }
-            override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
+            override fun onFailure(call: Call<KtpResponse>, t: Throwable) {
                 _isLoading.value = false
-                Log.d("KTP Upload", "onResponse: ${t.message.toString()}")
+                Log.d("KTP Gagal 2", "onResponse: ${t.message.toString()}")
             }
         })
     }
 
-
+    fun uploadPhoto(imageMultipart1: MultipartBody.Part, imageMultipart2: MultipartBody.Part, idUser : String){
+        _isLoading.value = true
+        val service = ApiConfig.getSiameseService().uploadFace(imageMultipart1, imageMultipart2, idUser)
+        service.enqueue(object : Callback<FaceResponse> {
+            override fun onResponse(
+                call: Call<FaceResponse>,
+                response: Response<FaceResponse>
+            ) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        Log.d("KTP Upload Berhasil", "onResponse: $responseBody")
+                        _faceResponse.value = responseBody.error
+                    }
+                } else {
+                    Log.d("Training Wajah Gagal", "onResponse: ${response.message()}")
+//                  _isLoading.value = false
+                }
+            }
+            override fun onFailure(call: Call<FaceResponse>, t: Throwable) {
+                _isLoading.value = false
+                Log.d("Training Wajah Failure", "onResponse: ${t.message.toString()}")
+            }
+        })
+    }
 
     fun hashNik(nik: String): String {
         val hashNik = MessageDigest.getInstance("SHA-256").digest(nik.toByteArray())

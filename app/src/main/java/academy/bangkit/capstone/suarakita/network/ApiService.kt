@@ -18,7 +18,7 @@ interface ApiService{
     fun register(
         @Field("nama") nama: String,
         @Field("nik") nik: String,
-        @Field("tanggal") tanggal: String,
+        @Field("tanggalLahir") tanggalLahir: String,
         @Field("email") email: String,
         @Field("password") password: String
     ): Call<RegisterResponse>
@@ -39,8 +39,21 @@ interface ApiService{
     ): Call<VoteResponse>
 
     @Multipart
-    @POST("test/upload")
+    @POST("masuk")
     fun uploadId(
-        @Part file: MultipartBody.Part,
-    ): Call<FileUploadResponse>
+        @Part image: MultipartBody.Part
+    ): Call<KtpResponse>
+
+    @GET("voting/checkUser/{nik}")
+    fun getVoteStatus(
+        @Path("nik") nik: String,
+    ): Call<VerifyResponse>
+
+    @Multipart
+    @POST("masuk/lagi")
+    fun uploadFace(
+        @Part image1: MultipartBody.Part,
+        @Part image2: MultipartBody.Part,
+        @Part idUser: String
+    ): Call<FaceResponse>
 }

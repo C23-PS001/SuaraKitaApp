@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".ui.signup.FaceActivity">
+    tools:context=".ui.signup.FaceActivity2">
 
     <ImageView
         android:id="@+id/suara_logo"
@@ -19,7 +19,7 @@
         android:id="@+id/terms_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/mohon_selfie"
+        android:text="@string/mohon_selfie2"
         android:textSize="24sp"
         android:fontFamily="@font/sf_bold"
         android:textColor="@color/black"
