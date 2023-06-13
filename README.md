@@ -46,4 +46,7 @@ Profile page was connected to navigation on home activity and accessed through p
 
 
 
-## Application APK
+## References
+- https://developer.android.com/
+- [dicoding.com](https://www.dicoding.com/)
+- jitpack.io documentation
