@@ -44,12 +44,10 @@ Profile page was connected to navigation on home activity and accessed through p
 
 ### 5. Vote
 Here are the flow when user want to cast their vote:
-1. ID Number Validation
-2. Face Verification.
-3. Vote Guide.
-4. Vote Page.
-
-> Jitpack Library/Dependency: 
+1. ID Number Validation. User required to input their id card number as the first step of the verification method. The verification purpose is to check eligibility to vote.
+2. Face Verification. As the second verification, user take selfie and the selfie was compared with the selfies that captured on the registration process to ensure that he/she is the real account holder/voter.
+3. Vote Guide. 
+4. Vote Page. User just need to click the prefered candidates and confirm the vote. The vote status on the profile page will be changed to "Sudah Memilih" when user completed the voting progress and won't be able to vote again.
 
 
 
