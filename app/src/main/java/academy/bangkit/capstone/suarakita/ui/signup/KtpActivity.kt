@@ -135,12 +135,10 @@ class KtpActivity : AppCompatActivity() {
         val cardWidth = 1200
         val cardHeight = 1800
 
-        Log.d("KtpActivity", "bitmap width: ${bitmap.width}")
-        Log.d("KtpActivity", "bitmap height: ${bitmap.height}")
-        val startX = (bitmap.width - cardWidth) / 2
-        val startY = (bitmap.height - cardHeight) / 2
+        val x = (bitmap.width - cardWidth) / 2
+        val y = (bitmap.height - cardHeight) / 2
 
-        return Bitmap.createBitmap(bitmap, startX, startY, cardWidth, cardHeight)
+        return Bitmap.createBitmap(bitmap, x, y, cardWidth, cardHeight)
     }
 
     private fun rotateImage(bitmap: Bitmap): Bitmap {
