@@ -19,9 +19,7 @@ class WelcomeActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         setupAction()
-
     }
-
 
     private fun setupAction() {
         binding.loginButton.setOnClickListener {

@@ -6,6 +6,7 @@ import academy.bangkit.capstone.suarakita.model.UserPreference
 import academy.bangkit.capstone.suarakita.ui.ViewModelFactory
 import academy.bangkit.capstone.suarakita.ui.camera.SelfieActivity
 import academy.bangkit.capstone.suarakita.ui.camera.rotateFile
+import academy.bangkit.capstone.suarakita.ui.login.LoginActivity
 import android.Manifest
 import android.content.Context
 import android.content.Intent
@@ -16,8 +17,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.WindowInsets
-import android.view.WindowManager
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -68,8 +69,22 @@ class FaceActivity2 : AppCompatActivity() {
         binding = ActivityFace2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val userId = intent.getStringExtra("userId")
+
+        val fileString = intent.getStringExtra("image1")
+        val fileUri: Uri = Uri.parse(fileString)
+
+        val file1 = File(fileUri.path)
+        val requestImageFile1 = file1.asRequestBody("image/jpeg".toMediaTypeOrNull())
+        val imageMultipart1: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "image1",
+            "foto1$userId.jpg",
+            requestImageFile1
+        )
+
         setupViewModel()
         setupView()
+        showLoading(false)
 
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
@@ -79,20 +94,15 @@ class FaceActivity2 : AppCompatActivity() {
             )
         }
 
+        signupViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+
         binding.cameraButton.setOnClickListener { startTakePhoto() }
-        binding.uploadButton.setOnClickListener { startUploadPhoto() }
+        binding.uploadButton.setOnClickListener { startUploadPhoto(imageMultipart1) }
     }
 
     private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
         supportActionBar?.hide()
 
         Glide.with(this)
@@ -136,30 +146,34 @@ class FaceActivity2 : AppCompatActivity() {
         }
     }
 
-    private fun startUploadPhoto() {
+    private fun startUploadPhoto(imageMultipart1: MultipartBody.Part) {
+        val userId = intent.getStringExtra("idUser")?.toRequestBody("text/plain".toMediaTypeOrNull())
         if (getFile != null) {
-            val file = reduceFileImage(getFile as File)
 
-            val requestImageFile2 = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val file2 = reduceFileImage(getFile as File)
+            val requestImageFile2 = file2.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imageMultipart2: MultipartBody.Part = MultipartBody.Part.createFormData(
                 "image2",
-                file.name,
+                "fotodua_${intent.getStringExtra("idUser")}.jpg",
                 requestImageFile2
             )
 
-            val fileUri = intent.getParcelableExtra<Uri>("image1")
-            val file1 = File(fileUri?.path)
-            val requestImageFile1 = file1.asRequestBody("image/jpeg".toMediaTypeOrNull())
-            val imageMultipart1: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "image1",
-                file.name,
-                requestImageFile1
-            )
-
-            val userId = intent.getStringExtra("userId")
+            Toast.makeText(this, "Sedang mengenali wajah anda", Toast.LENGTH_SHORT).show()
 
             if (userId != null) {
                 signupViewModel.uploadPhoto(imageMultipart1, imageMultipart2, userId)
+                signupViewModel.faceResponse.observe(this) {
+                    if (it != null) {
+                        if (it.error == "false") {
+                            val intent = Intent(this, LoginActivity::class.java)
+                            Toast.makeText(this,"Data wajah berhasil dipelajari!",Toast.LENGTH_SHORT).show()
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Toast.makeText(this,"Gagal mengirimkan data wajah!",Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }else{
                 Log.d("FaceActivity2", "startUploadPhoto: userId is null")
             }
@@ -188,6 +202,10 @@ class FaceActivity2 : AppCompatActivity() {
 
         bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
         return file
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {

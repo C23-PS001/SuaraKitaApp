@@ -15,8 +15,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.WindowInsets
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -81,15 +79,6 @@ class FaceActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
         supportActionBar?.hide()
 
         Glide.with(this)
@@ -137,15 +126,10 @@ class FaceActivity : AppCompatActivity() {
         if (getFile != null) {
             val file = reduceFileImage(getFile as File)
 
-//            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-//            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-//                "photo",
-//                file.name,
-//                requestImageFile
-//            )
-
-            val intent = Intent(this, FaceActivity2::class.java)
-            intent.putExtra("image1", Uri.fromFile(file))
+            val intentFace = Intent(this, FaceActivity2::class.java)
+            intentFace.putExtra("idUser", intent.getStringExtra("idUser"))
+            intentFace.putExtra("image1", Uri.fromFile(file).toString())
+            startActivity(intentFace)
 
         } else {
             Toast.makeText(

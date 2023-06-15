@@ -45,6 +45,7 @@ class VerifyActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
+        val linkFoto = intent.getStringExtra("ktp")
         binding.namaEditText.setText(intent.getStringExtra("name"))
         binding.nikEditText.setText(intent.getStringExtra("nik"))
         binding.tanggalEditText.setText(intent.getStringExtra("dob"))
@@ -94,13 +95,28 @@ class VerifyActivity : AppCompatActivity() {
                 else -> {
                     Log.d("VerifyActivity", "verify: $tanggal")
                     signupViewModel.registerUser(nama, signupViewModel.hashNik(nik), tanggal, email, password)
+
                     signupViewModel.response.observe(this) {
                         if (it != null) {
                             if(!it.error) {
-                                val intent = Intent(this, FaceActivity::class.java)
-                                intent.putExtra("userId", it.idUser)
-                                startActivity(intent)
-                                finish()
+                                if (linkFoto != null) {
+                                    signupViewModel.deleteKtp(linkFoto)
+                                }else{
+                                    Toast.makeText(this, "KTP tidak ditemukan", Toast.LENGTH_SHORT).show()
+                                }
+                                signupViewModel.deleteResponse.observe(this) {delete ->
+                                    if (delete != null) {
+                                        if (!delete.error) {
+                                            val intent = Intent(this, FaceActivity::class.java)
+                                            intent.putExtra("idUser", it.idUser)
+                                            startActivity(intent)
+                                            finish()
+                                        } else {
+                                            Toast.makeText(this, delete.message, Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                }
+
                             }else{
                                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                             }

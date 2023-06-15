@@ -63,7 +63,6 @@ class VerifyIdActivity : AppCompatActivity() {
 
                     } else if (it.isVoted == true && it.dataExist == false) {
                         Toast.makeText(this, "Data NIK anda tidak sesuai", Toast.LENGTH_SHORT).show()
-
                     }
                 }
             }

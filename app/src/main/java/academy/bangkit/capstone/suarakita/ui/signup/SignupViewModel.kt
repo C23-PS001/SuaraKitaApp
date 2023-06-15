@@ -1,14 +1,12 @@
 package academy.bangkit.capstone.suarakita.ui.signup
 
 import academy.bangkit.capstone.suarakita.model.UserPreference
-import academy.bangkit.capstone.suarakita.network.ApiConfig
-import academy.bangkit.capstone.suarakita.network.FaceResponse
-import academy.bangkit.capstone.suarakita.network.KtpResponse
-import academy.bangkit.capstone.suarakita.network.RegisterResponse
+import academy.bangkit.capstone.suarakita.network.*
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,8 +16,11 @@ class SignupViewModel(private val pref: UserPreference) : ViewModel(){
     private val _response = MutableLiveData<RegisterResponse?>()
     val response: MutableLiveData<RegisterResponse?> = _response
 
-    private val _faceResponse = MutableLiveData<Boolean?>()
-    val faceResponse: MutableLiveData<Boolean?> = _faceResponse
+    private val _faceResponse = MutableLiveData<TrainingResponse?>()
+    val faceResponse: MutableLiveData<TrainingResponse?> = _faceResponse
+
+    private val _deleteResponse = MutableLiveData<DeleteKtpResponse?>()
+    val deleteResponse: MutableLiveData<DeleteKtpResponse?> = _deleteResponse
 
     private val _responseKtp = MutableLiveData<KtpResponse?>()
     val responseKtp: MutableLiveData<KtpResponse?> = _responseKtp
@@ -37,8 +38,8 @@ class SignupViewModel(private val pref: UserPreference) : ViewModel(){
             ) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
-                        _response.value = response.body()
-                        Log.d("Register", "onResponse: ${response.body()?.message}")
+                    _response.value = response.body()
+                    Log.d("Register", "onResponse: ${response.body()?.message}")
                 }
             }
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
@@ -63,7 +64,6 @@ class SignupViewModel(private val pref: UserPreference) : ViewModel(){
                     }
                 } else {
                     Log.d("KTP Upload Gagal1", "onResponse: ${response.message()}")
-//                    _responseKtp.value = response.message()
                 }
             }
             override fun onFailure(call: Call<KtpResponse>, t: Throwable) {
@@ -73,29 +73,55 @@ class SignupViewModel(private val pref: UserPreference) : ViewModel(){
         })
     }
 
-    fun uploadPhoto(imageMultipart1: MultipartBody.Part, imageMultipart2: MultipartBody.Part, idUser : String){
+    fun uploadPhoto(imageMultipart1: MultipartBody.Part, imageMultipart2: MultipartBody.Part, idUser : RequestBody){
         _isLoading.value = true
-        val service = ApiConfig.getSiameseService().uploadFace(imageMultipart1, imageMultipart2, idUser)
-        service.enqueue(object : Callback<FaceResponse> {
+        Log.d("Face ID User", "uploadPhoto: $idUser")
+        val service = ApiConfig.getSiameseService().siameseTraining(imageMultipart1, imageMultipart2, idUser)
+        service.enqueue(object : Callback<TrainingResponse> {
             override fun onResponse(
-                call: Call<FaceResponse>,
-                response: Response<FaceResponse>
+                call: Call<TrainingResponse>,
+                response: Response<TrainingResponse>
             ) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        Log.d("KTP Upload Berhasil", "onResponse: $responseBody")
-                        _faceResponse.value = responseBody.error
+                        Log.d("Upload Wajah Berhasil", "onResponse: $responseBody")
+                        _faceResponse.value = responseBody
                     }
                 } else {
                     Log.d("Training Wajah Gagal", "onResponse: ${response.message()}")
-//                  _isLoading.value = false
                 }
             }
-            override fun onFailure(call: Call<FaceResponse>, t: Throwable) {
+            override fun onFailure(call: Call<TrainingResponse>, t: Throwable) {
                 _isLoading.value = false
                 Log.d("Training Wajah Failure", "onResponse: ${t.message.toString()}")
+            }
+        })
+    }
+
+    fun deleteKtp(link: String){
+        _isLoading.value = true
+        val service = ApiConfig.getOcrService().deleteId(link)
+        service.enqueue(object : Callback<DeleteKtpResponse> {
+            override fun onResponse(
+                call: Call<DeleteKtpResponse>,
+                response: Response<DeleteKtpResponse>
+            ) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        Log.d("KTP Delete Berhasil", "onResponse: $responseBody")
+                        _deleteResponse.value = responseBody
+                    }
+                } else {
+                    Log.d("Hapus KTP Gagal", "onResponse: ${response.message()}")
+                }
+            }
+            override fun onFailure(call: Call<DeleteKtpResponse>, t: Throwable) {
+                _isLoading.value = false
+                Log.d("Server Gagal Hapus KTP", "onResponse: ${t.message.toString()}")
             }
         })
     }

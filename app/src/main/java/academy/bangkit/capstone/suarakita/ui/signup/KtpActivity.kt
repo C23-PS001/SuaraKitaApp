@@ -172,6 +172,7 @@ class KtpActivity : AppCompatActivity() {
                     intent.putExtra("name", it.nama)
                     Log.d("KTP", it.nama )
                     intent.putExtra("dob", it.tglLahir)
+                    intent.putExtra("ktp", it.linkFoto)
                 }
                 Log.d("KTP", "startUploadPhoto: $it")
                 startActivity(intent)

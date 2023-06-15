@@ -1,6 +1,7 @@
 package academy.bangkit.capstone.suarakita.network
 
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 import java.util.*
@@ -28,9 +29,6 @@ interface ApiService{
         @Path("id") token: String
     ): Call<UserResponse>
 
-    @GET("voting")
-    fun getVoteCount(): Call<CountResponse>
-
     @FormUrlEncoded
     @POST("voting")
     fun vote(
@@ -44,16 +42,29 @@ interface ApiService{
         @Part image: MultipartBody.Part
     ): Call<KtpResponse>
 
+    @FormUrlEncoded
+    @POST("keluar")
+    fun deleteId(
+        @Field ("linkFoto") linkFoto: String
+    ): Call<DeleteKtpResponse>
+
     @GET("voting/checkUser/{nik}")
     fun getVoteStatus(
         @Path("nik") nik: String,
     ): Call<VerifyResponse>
 
     @Multipart
-    @POST("masuk/lagi")
-    fun uploadFace(
+    @POST("training")
+    fun siameseTraining(
         @Part image1: MultipartBody.Part,
         @Part image2: MultipartBody.Part,
-        @Part idUser: String
-    ): Call<FaceResponse>
+        @Part("idUser") idUser: RequestBody
+    ): Call<TrainingResponse>
+
+    @Multipart
+    @POST("predict")
+    fun siamesePredict(
+        @Part Gambar: MultipartBody.Part,
+        @Part("idUser") idUser: RequestBody
+    ): Call<PredictResponse>
 }

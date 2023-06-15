@@ -11,5 +11,17 @@ data class KtpResponse(
 	val nama: String,
 
 	@field:SerializedName("Tgl Lahir")
-	val tglLahir: String
+	val tglLahir: String,
+
+	@field:SerializedName("Link Photo")
+	val linkFoto: String
+)
+
+data class DeleteKtpResponse(
+
+	@field:SerializedName("error")
+	val error: Boolean,
+
+	@field:SerializedName("message")
+	val message: String,
 )
