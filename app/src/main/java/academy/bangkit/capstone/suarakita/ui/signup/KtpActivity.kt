@@ -118,7 +118,7 @@ class KtpActivity : AppCompatActivity() {
             myFile?.let { file ->
                 rotateFile(file, isBackCamera)
                 val capturedImageBitmap = BitmapFactory.decodeFile(file.path)
-                var croppedImageBitmap = cropImageBitmap(capturedImageBitmap)
+                var croppedImageBitmap = cropImage(capturedImageBitmap)
                 croppedImageBitmap = rotateImage(croppedImageBitmap)
 
                 val croppedImageOutputStream = FileOutputStream(file)
@@ -131,7 +131,7 @@ class KtpActivity : AppCompatActivity() {
         }
     }
 
-    private fun cropImageBitmap(bitmap: Bitmap): Bitmap {
+    private fun cropImage(bitmap: Bitmap): Bitmap {
         val cardWidth = 1200
         val cardHeight = 1800
 
